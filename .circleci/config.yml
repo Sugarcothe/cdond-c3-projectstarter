@@ -190,7 +190,7 @@ jobs:
     - run:
         name: Configure EC2 server
         command: |
-          cd circleci/ansible
+          cd .circleci/ansible
           ansible-playbook -i inventory.txt configure-server.yml
 
     - destroy-environment:
@@ -199,29 +199,29 @@ jobs:
   # RUN MIGRATION
   run-migrations:
     docker:
-      - image: python:3.7-alpine3.16
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run: 
           name: Install dependencies
           command: |
-            apk add --update --no-cache tar gzip nodejs npm aws-cli curl
+            sudo apt install -y tar gzip curl
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscli2.zip"
+            unzip -qq "awscli2.zip"
+            sudo ./aws/install
       - restore_cache:
           keys: [backend-build] 
       - run:
           name: Run migrations
           command: |
             cd backend
-            npm install
-            npm audit fix --audit-level-critical
-            npm run build
             npm run migrations >> migrations.txt
       - run:
           name: Send migration results to kvdb.io
           command: |
-            if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
+            if grep -q "has been executed successfully." ~/project/backend/migrations.txt
             then
-                curl https://kvdb.io/TaacohqZxDnkMKakQUCxm8/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+                curl --insecure https://kvdb.io/TaacohqZxDnkMKakQUCxm8/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
       - destroy-environment:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}   
