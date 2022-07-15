@@ -273,7 +273,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update --no-cache tar gzip nodejs aws-cli ansible
+            apk add --update --no-cache tar gzip nodejs npm aws-cli ansible
       - attach_workspace:
           at: ~/
       - restore_cache:
