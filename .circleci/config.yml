@@ -115,10 +115,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: [backend-build]
       - run: 
           command: |
-            cd frontend
+            cd backend
             npm install
             npm audit --audit-level-critical
 
