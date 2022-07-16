@@ -172,9 +172,6 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-
-      - destroy-environment:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}  
          
   # CONFIGURE INFRASTRUCTURE 1e:e8:5e:76:c1:59:c4:45:8f:4b:7b:b3:f6:5a:72:5e
   configure-infrastructure:
