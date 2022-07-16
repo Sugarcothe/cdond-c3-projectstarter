@@ -186,6 +186,10 @@ jobs:
           fingerprints: ["1e:e8:5e:76:c1:59:c4:45:8f:4b:7b:b3:f6:5a:72:5e"]
       - attach_workspace:
           at: ~/
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/backend
       - run:
           name: Install dependencies on container
           command: |
@@ -205,13 +209,10 @@ jobs:
             cat .circleci/ansible/inventory.txt
             ansible-playbook .circleci/ansible/configure-server.yml -i .circleci/ansible/inventory.txt 
       # save backend back to workspace
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/backend
+      
       # Here's where you will add some code to rollback on failure
-      - destroy-environment:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+      # - destroy-environment:
+      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   # RUN MIGRATION
   run-migrations:
     docker:
