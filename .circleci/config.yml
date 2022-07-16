@@ -213,7 +213,7 @@ jobs:
             echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> ~/project/backend/.env
             cat ~/project/backend/.env
             cd ~/project/.circleci/ansible
-            ansible-playbook -i inventory.txt configure-server.yml \
+            ansible-playbook -i ~/inventory.txt configure-server.yml \
             
       # save backend back to workspace
       - persist_to_workspace:
