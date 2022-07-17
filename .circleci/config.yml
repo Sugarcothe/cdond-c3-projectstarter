@@ -324,7 +324,7 @@ jobs:
       - destroy-environment
       - revert-migrations
 
-  # This is the right way to handle cleanup and update. Notice how I first get the oldWorkflowId before doing update.
+  # This is the right way to handle cleanup and update. Notice how I first get the oldWorkflowId before doing update
   cloudfront-update:
     docker:
       - image: amazon/aws-cli
