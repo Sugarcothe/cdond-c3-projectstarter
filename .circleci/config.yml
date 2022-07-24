@@ -397,7 +397,7 @@ jobs:
               echo ------------ Cannot cleanup stacks --------------
             fi
 workflows:
-  default:
+  default1:
     jobs:
       - build-frontend
       - build-backend
